@@ -100,13 +100,14 @@
 
 **前端：React + Vite**
 
-- React 18  
-- Zustand（状态管理）  
-- React Router  
-- TailwindCSS  
-- Radix UI  
+- React 18.2.0  
+- Vite 5.4.0  
+- Zustand 4.5.0（状态管理）  
+- React Router 6.22.0  
+- TailwindCSS 3.4.0  
+- Radix UI 1.0.0  
 
-**后端：Tauri（Rust）**
+**后端：Tauri 2.9.2+（Rust）**
 
 - 进程管理（启动/停止 OpenClaw）  
 - 文件系统操作  
@@ -156,15 +157,23 @@ cd o-my-claw
 
 ```bash
 npm install
+# 安装Tauri CLI
+npm install -D @tauri-apps/cli@2.9.2
 ```
 
-### 3. 启动开发环境
+### 3. 初始化Tauri
+
+```bash
+npx tauri init
+```
+
+### 4. 启动开发环境
 
 ```bash
 npm run tauri dev
 ```
 
-### 4. 构建应用
+### 5. 构建应用
 
 ```bash
 npm run tauri build
