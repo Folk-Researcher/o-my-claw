@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #5B8CFF;
+  --secondary: #FF6B9C;
+  --background: #0B1020;
+  --accent: #F5D76E;
+}
+
+body {
+  background-color: var(--background);
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}

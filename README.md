@@ -153,21 +153,19 @@ git clone https://github.com/yourname/o-my-claw.git
 cd o-my-claw
 ```
 
-### 2. 安装依赖
+### 2. 安装前端依赖
 
 ```bash
 npm install
-# 安装Tauri CLI
-npm install -D @tauri-apps/cli@2.9.2
 ```
 
-### 3. 初始化Tauri
+### 3. 启动前端开发服务器
 
 ```bash
-npx tauri init
+npm run dev
 ```
 
-### 4. 启动开发环境
+### 4. 启动Tauri开发环境
 
 ```bash
 npm run tauri dev
@@ -178,6 +176,22 @@ npm run tauri dev
 ```bash
 npm run tauri build
 ```
+
+### 6. 依赖管理说明
+
+- **前端依赖**：通过 `package.json` 管理，使用 npm 安装
+- **后端依赖**：通过 `src-tauri/Cargo.toml` 管理，由 Tauri 自动安装
+- **开发依赖**：包括 TypeScript、Vite、TailwindCSS 等构建工具
+- **运行依赖**：包括 React、React Router、Zustand 等核心库
+
+### 7. 首次运行步骤
+
+1. 确保已安装 Node.js 18+ 和 Rust 1.70+
+2. 克隆项目并进入目录
+3. 运行 `npm install` 安装前端依赖
+4. 运行 `npm run tauri dev` 启动开发环境
+5. Tauri 会自动安装 Rust 依赖并构建应用
+6. 应用启动后，即可开始开发和测试
 
 ---
 
