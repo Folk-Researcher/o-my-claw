@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.tauri.app/config/2.0",
+  "identifier": "com.omyclaw.app",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:5173",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "o my claw",
+        "width": 800,
+        "height": 600
+      }
+    ]
+  }
+}

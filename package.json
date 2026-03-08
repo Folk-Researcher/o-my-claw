@@ -8,19 +8,20 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "set PATH=%PATH%;C:/Users/liche/.cargo/bin && tauri"
   },
   "dependencies": {
+    "@radix-ui/react-icons": "1.3.0",
+    "@tauri-apps/api": "^2.5.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "6.22.0",
-    "zustand": "4.5.0",
-    "@radix-ui/react-icons": "1.3.0"
+    "zustand": "4.5.0"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "2.5.6",
     "@types/react": "18.2.43",
     "@types/react-dom": "18.2.17",
-    "@tauri-apps/cli": "2.9.2",
     "@typescript-eslint/eslint-plugin": "6.14.0",
     "@typescript-eslint/parser": "6.14.0",
     "@vitejs/plugin-react": "4.2.1",
