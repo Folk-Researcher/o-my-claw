@@ -1,8 +1,82 @@
 #root {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
   text-align: center;
+}
+
+/* App 布局 */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 导航栏 */
+.app-nav {
+  display: flex;
+  gap: 10px;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-button {
+  padding: 10px 20px;
+  background: transparent;
+  border: 2px solid #5B8CFF;
+  border-radius: 6px;
+  color: #5B8CFF;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.nav-button:hover {
+  background: rgba(91, 140, 255, 0.1);
+}
+
+.nav-button.active {
+  background: #5B8CFF;
+  color: white;
+}
+
+/* 主内容区 */
+.app-main {
+  flex: 1;
+  overflow: auto;
+}
+
+/* 首页 */
+.home-page {
+  padding: 40px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.home-page h1 {
+  color: #5B8CFF;
+  margin-bottom: 20px;
+}
+
+.feature-list {
+  margin-top: 40px;
+  text-align: left;
+}
+
+.feature-list h3 {
+  color: #FF6B9C;
+  margin-bottom: 15px;
+}
+
+.feature-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.feature-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .logo {

@@ -1,70 +1,66 @@
 import { useState } from 'react'
 import './App.css'
-
-// 导入Tauri API
-import { invoke } from '@tauri-apps/api/core'
+import { VersionManager } from './pages'
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [name, setName] = useState('World')
-  const [greeting, setGreeting] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-
-  // 调用后端greet命令
-  const handleGreet = async () => {
-    setIsLoading(true)
-    try {
-      const response = await invoke('greet', { request: { name: name } })
-      setGreeting(response.message)
-    } catch (error) {
-      console.error('Error calling greet:', error)
-      setGreeting('Error: ' + error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  const [currentPage, setCurrentPage] = useState<'home' | 'version'>('home')
 
   return (
-    <>
+    <div className="app">
+      <nav className="app-nav">
+        <button 
+          className={`nav-button ${currentPage === 'home' ? 'active' : ''}`}
+          onClick={() => setCurrentPage('home')}
+        >
+          Home
+        </button>
+        <button 
+          className={`nav-button ${currentPage === 'version' ? 'active' : ''}`}
+          onClick={() => setCurrentPage('version')}
+        >
+          Version Manager
+        </button>
+      </nav>
+
+      <main className="app-main">
+        {currentPage === 'home' ? (
+          <HomePage />
+        ) : (
+          <VersionManager />
+        )}
+      </main>
+    </div>
+  )
+}
+
+// 首页组件
+function HomePage() {
+  const [count, setCount] = useState(0)
+
+  return (
+    <div className="home-page">
       <h1>o my claw</h1>
+      <p>Welcome to o my claw - OpenClaw Desktop Manager</p>
       
-      {/* 计数器组件 */}
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
         <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+          Click the button to test React state
         </p>
       </div>
-      
-      {/* 前后端通信测试 */}
-      <div className="card">
-        <h2>前后端通信测试</h2>
-        <div className="input-group">
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter your name"
-            className="input"
-          />
-          <button 
-            onClick={handleGreet}
-            disabled={isLoading}
-            className="button"
-          >
-            {isLoading ? 'Loading...' : 'Greet'}
-          </button>
-        </div>
-        {greeting && (
-          <div className="greeting">
-            <h3>Response:</h3>
-            <p>{greeting}</p>
-          </div>
-        )}
+
+      <div className="feature-list">
+        <h3>Features:</h3>
+        <ul>
+          <li>✅ Version Management - Download and manage OpenClaw versions</li>
+          <li>⏳ Launch Control - Start/Stop OpenClaw instances</li>
+          <li>⏳ Configuration - Manage OpenClaw settings</li>
+          <li>⏳ Logs - View OpenClaw logs</li>
+        </ul>
       </div>
-    </>
+    </div>
   )
 }
 
