@@ -32,6 +32,7 @@ export function VersionManager() {
   const loadReleases = async () => {
     try {
       setLoading(true);
+      
       const data = await invoke<Release[]>('list_releases');
       setReleases(data);
       if (data.length > 0) {
@@ -136,7 +137,20 @@ export function VersionManager() {
   }
 
   if (error) {
-    return <div className="version-manager error">{error}</div>;
+    return (
+      <div className="version-manager">
+        <h1>OpenClaw Version Manager</h1>
+        <div className="version-manager-content">
+          <div className="error-container">
+            <h2>Error</h2>
+            <p>{error}</p>
+            <button onClick={() => { setError(null); loadReleases(); }} className="button">
+              Retry
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

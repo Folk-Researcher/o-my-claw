@@ -199,3 +199,21 @@
 .error {
   color: #FF6B9C;
 }
+
+.error-container {
+  text-align: center;
+  padding: 60px 40px;
+  background: rgba(255, 107, 156, 0.1);
+  border-radius: 8px;
+  border: 2px solid #FF6B9C;
+}
+
+.error-container h2 {
+  color: #FF6B9C;
+  margin-bottom: 20px;
+}
+
+.error-container p {
+  margin-bottom: 30px;
+  line-height: 1.6;
+}

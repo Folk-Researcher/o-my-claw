@@ -35,21 +35,10 @@ function App() {
 
 // 首页组件
 function HomePage() {
-  const [count, setCount] = useState(0)
-
   return (
     <div className="home-page">
       <h1>O My Claw</h1>
       <p>Welcome to O My Claw - OpenClaw Desktop Manager</p>
-      
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Click the button to test React state
-        </p>
-      </div>
 
       <div className="feature-list">
         <h3>Features:</h3>
@@ -59,6 +48,11 @@ function HomePage() {
           <li>⏳ Configuration - Manage OpenClaw settings</li>
           <li>⏳ Logs - View OpenClaw logs</li>
         </ul>
+      </div>
+
+      <div className="quick-start">
+        <h3>Quick Start:</h3>
+        <p>Click "Version Manager" in the navigation to get started.</p>
       </div>
     </div>
   )

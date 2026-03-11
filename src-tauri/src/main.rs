@@ -13,7 +13,6 @@ fn main() {
   tauri::Builder::default()
     .manage(process_manager)
     .invoke_handler(tauri::generate_handler![
-      commands::greet::greet,
       commands::version_manager::list_releases,
       commands::version_manager::checkout_version,
       commands::version_manager::compile_version,
