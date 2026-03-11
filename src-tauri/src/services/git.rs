@@ -26,9 +26,40 @@ pub fn clone_repository(url: &str, path: &str) -> Result<Repository, String> {
     Ok(repo)
 }
 
+/// 从远程获取所有标签
+///
+/// 执行 `git fetch --tags` 操作，将远程标签同步到本地
+///
+/// # 参数
+/// - `repo_path`: 仓库本地路径
+///
+/// # 返回值
+/// - `Ok(())`: 成功
+/// - `Err(String)`: 失败时返回错误信息
+pub fn fetch_tags(repo_path: &str) -> Result<(), String> {
+    // 打开仓库
+    let repo = Repository::open(repo_path)
+        .map_err(|e| format!("Failed to open repository: {}", e))?;
+
+    // 获取 origin 远程
+    let mut remote = repo.find_remote("origin")
+        .map_err(|e| format!("Failed to find remote: {}", e))?;
+
+    // 配置 fetch 选项，只获取标签
+    let mut fetch_opts = FetchOptions::new();
+
+    // 执行 fetch，获取远程标签
+    // refs/tags/*:refs/tags/* 表示将远程标签映射到本地标签
+    remote.fetch(&["refs/tags/*:refs/tags/*"], Some(&mut fetch_opts), None)
+        .map_err(|e| format!("Failed to fetch tags: {}", e))?;
+
+    Ok(())
+}
+
 /// 检出指定标签到工作目录
 ///
-/// 将仓库切换到指定标签对应的提交，使用 detached HEAD 模式
+/// 将仓库切换到指定标签对应的提交，使用 detached HEAD 模式。
+/// 如果本地没有该标签，会先尝试从远程获取。
 ///
 /// # 参数
 /// - `repo_path`: 仓库本地路径
@@ -44,26 +75,37 @@ pub fn checkout_tag(repo_path: &str, tag: &str) -> Result<(), String> {
     // 打开仓库
     let repo = Repository::open(repo_path)
         .map_err(|e| format!("Failed to open repository: {}", e))?;
-    
-    // 获取 tag 对应的引用
-    let reference = repo.find_reference(&format!("refs/tags/{}", tag))
-        .map_err(|e| format!("Tag not found: {}", e))?;
-    
+
+    // 尝试查找本地标签
+    let reference_result = repo.find_reference(&format!("refs/tags/{}", tag));
+
+    // 如果本地标签不存在，尝试从远程获取
+    let reference = match reference_result {
+        Ok(reference) => reference,
+        Err(_) => {
+            // 先获取远程标签
+            fetch_tags(repo_path)?;
+            // 再次尝试查找标签
+            repo.find_reference(&format!("refs/tags/{}", tag))
+                .map_err(|e| format!("Tag '{}' not found after fetching: {}", tag, e))?
+        }
+    };
+
     // 获取 tag 指向的提交
     let commit = reference.peel_to_commit()
         .map_err(|e| format!("Failed to get commit: {}", e))?;
-    
+
     // 设置 HEAD 为 detached 状态，指向该提交
     repo.set_head_detached(commit.id())
         .map_err(|e| format!("Failed to checkout: {}", e))?;
-    
+
     // 强制检出文件到工作目录
     let mut checkout_opts = git2::build::CheckoutBuilder::new();
     checkout_opts.force();
-    
+
     repo.checkout_head(Some(&mut checkout_opts))
         .map_err(|e| format!("Failed to checkout files: {}", e))?;
-    
+
     Ok(())
 }
 
