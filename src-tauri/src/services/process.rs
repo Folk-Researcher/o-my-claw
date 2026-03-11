@@ -70,7 +70,7 @@ pub async fn start_openclaw(
 ) -> Result<(), String> {
     // 检查是否已有进程在运行
     {
-        let mut current = manager.current_process.lock().unwrap();
+        let current = manager.current_process.lock().unwrap();
         if current.is_some() {
             return Err("OpenClaw is already running".to_string());
         }
@@ -96,9 +96,13 @@ pub async fn start_openclaw(
 }
 
 pub async fn stop_openclaw(manager: &ProcessManager) -> Result<(), String> {
-    let mut current = manager.current_process.lock().unwrap();
+    // 先取出进程，释放锁
+    let child_opt = {
+        let mut current = manager.current_process.lock().unwrap();
+        current.take()
+    };
     
-    if let Some(mut child) = current.take() {
+    if let Some(mut child) = child_opt {
         child.kill().await
             .map_err(|e| format!("Failed to stop OpenClaw: {}", e))?;
         manager.add_log("OpenClaw stopped".to_string());

@@ -39,8 +39,8 @@ function HomePage() {
 
   return (
     <div className="home-page">
-      <h1>o my claw</h1>
-      <p>Welcome to o my claw - OpenClaw Desktop Manager</p>
+      <h1>O My Claw</h1>
+      <p>Welcome to O My Claw - OpenClaw Desktop Manager</p>
       
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>

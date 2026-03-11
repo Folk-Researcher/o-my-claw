@@ -87,7 +87,7 @@ pub fn is_openclaw_running(process_manager: State<'_, Arc<ProcessManager>>) -> b
 
 // 检查本地版本状态
 #[tauri::command]
-pub fn check_local_version(tag: String) -> Result<String, String> {
+pub fn check_local_version(_tag: String) -> Result<String, String> {
     let source_path = format!("{}/{}", std::env::temp_dir().to_string_lossy(), SOURCE_DIR);
     
     if !git::repository_exists(&source_path) {
